@@ -1,5 +1,12 @@
-org\aaf\financeiro\util\CNB240_SICOOB_CONSTANTS.class
-org\aaf\financeiro\util\CNAB240.class
-org\aaf\financeiro\util\CNAB240$1.class
-org\aaf\financeiro\util\CNAB240_SICOOB.class
 org\aaf\financeiro\util\CNAB240_SICOOB$1.class
+org\aaf\financeiro\util\CNAB240_SICOOB$2.class
+org\aaf\financeiro\util\CNAB240.class
+org\aaf\financeiro\util\CNAB240_SICOOB.class
+org\aaf\financeiro\model\Lote.class
+org\aaf\financeiro\util\CNB240_SICOOB_CONSTANTS.class
+org\aaf\financeiro\model\Boleto.class
+org\aaf\financeiro\util\CNAB240$1.class
+org\aaf\financeiro\util\CNAB240_SICOOB_REMESSA_CONSTANTS.class
+org\aaf\financeiro\util\OfficeUtil.class
+org\aaf\financeiro\util\CNAB240_REMESSA_SICOOB.class
+org\aaf\financeiro\model\Pagador.class

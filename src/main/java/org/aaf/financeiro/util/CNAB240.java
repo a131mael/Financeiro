@@ -16,7 +16,7 @@ public class CNAB240 {
 
 	public static void main(String[] args) {
 
-		System.out.println(gerarNumeroBoleto("11", new Date(), "20000"));
+		System.out.println(gerarNumeroBoleto("57", new Date(), "22000"));
 
 	}
 
@@ -74,17 +74,6 @@ public class CNAB240 {
 		};
 		return banco;
 
-	}
-
-	public static void geraPDFBoleto() {
-		/*Emissor rodrigo = Emissor.novoEmissor().comCedente("Rodrigo Turini").comAgencia(1234).comCarteira(157)
-				.comContaCorrente(123456).comNossoNumero(123456789l).comDigitoNossoNumero("6");
-
-		Sacado paulo = Sacado.novoSacado().comNome("Paulo Silveira");
-
-		Boleto boleto = Boleto.novoBoleto().comDatas(getDatasStella(new Date())).comEmissor(rodrigo).comBanco(getBancoSicoob()).comSacado(paulo)
-				.comValorBoleto(2680.16).comNumeroDoDocumento("123456");
-*/
 	}
 
 	public static String gerarNumeroBoleto(String numeroBoleto, Date dataVencimento, String valorBoleto) {
@@ -261,7 +250,7 @@ public class CNAB240 {
 	// TODO tamanho do campo = 8 e inicia em 10000
 	public static String completaNossoNumero(String valorAtual) {
 		int contadorAtual = Integer.parseInt(valorAtual);
-		int nossoNumero = contadorAtual + 10000;
+		int nossoNumero = contadorAtual /*+ 10000*/;
 		StringBuilder nossoNumeroStr = new StringBuilder();
 		nossoNumeroStr.append(nossoNumero);
 
