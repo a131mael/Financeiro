@@ -1,10 +1,17 @@
-package org.aaf.financeiro.util;
+package org.aaf.financeiro.sicoob.util;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import org.aaf.financeiro.util.CNAB240;
+import org.aaf.financeiro.util.OfficeUtil;
+import org.aaf.financeiro.util.constantes.CNAB240_SICOOB_REMESSA_CONSTANTS_TEFAMEL;
+import org.aaf.financeiro.util.constantes.CNB240_SICOOB_CONSTANTS_ADONAI;
+import org.aaf.financeiro.util.constantes.CNB240_SICOOB_CONSTANTS_TEFAMEL;
+import org.aaf.financeiro.util.constantes.Constante;
 
 import br.com.caelum.stella.boleto.Banco;
 import br.com.caelum.stella.boleto.Beneficiario;
@@ -17,19 +24,32 @@ import br.com.caelum.stella.boleto.transformer.GeradorDeBoleto;
 
 public class CNAB240_SICOOB {
 
+	private Constante constant = null;
+
+	public CNAB240_SICOOB(int constante) {
+		switch (constante) {
+		case 1: //TEFAMEL
+			constant =  new Constante(new CNB240_SICOOB_CONSTANTS_TEFAMEL());
+			break;
+
+		case 2: //ADONAI
+			constant =  new Constante(new CNB240_SICOOB_CONSTANTS_ADONAI());
+			break;
+
+		default:
+			break;
+		}
+
+	}
 
 	public byte[] getBoletoPDF(String numeroDoBoleto, String valor, String nomePagador, String ruaPagador,
 			String cepPagador, String cidadePagador, String bairroPagador, String ufPagador, String cpfPagador,
 			Date dataVencimento) {
 		Datas datas = getDatasStella(dataVencimento);
 		Endereco enderecoPagador = getEnderecoStella(ruaPagador, bairroPagador, cepPagador, cidadePagador, ufPagador);
-		Endereco enderecoBeneficiario = getEnderecoStella(CNB240_SICOOB_CONSTANTS.RUA_TEFAMEL,
-				CNB240_SICOOB_CONSTANTS.BAIRRO_TEFAMEL, CNB240_SICOOB_CONSTANTS.CEP_TEFAMEL,
-				CNB240_SICOOB_CONSTANTS.CIDADE_TEFAMEL, CNB240_SICOOB_CONSTANTS.UF_TEFAMEL);
-		Beneficiario beneficiario = getBeneficiarioStella(CNB240_SICOOB_CONSTANTS.NOME_TEFAMEL,
-				CNB240_SICOOB_CONSTANTS.COD_AGENCIA, "", CNB240_SICOOB_CONSTANTS.COD_BENEFICIARIO,
-				CNB240_SICOOB_CONSTANTS.COD_BENEFICIARIO, CNB240_SICOOB_CONSTANTS.COD_CARTEIRA,
-				CNB240_SICOOB_CONSTANTS.CNPJ_TEFAMEL, enderecoBeneficiario, numeroDoBoleto);
+		Endereco enderecoBeneficiario = getEnderecoStella(constant.RUA, constant.BAIRRO,constant.CEP, constant.CIDADE,constant.UF);
+		Beneficiario beneficiario = getBeneficiarioStella(constant.NOME,constant.getCOD_AGENCIA(), "", constant.getCOD_BENEFICIARIO(),
+				constant.getCOD_BENEFICIARIO(), constant.getCOD_CARTEIRA(),constant.CNPJ, enderecoBeneficiario, numeroDoBoleto);
 		Pagador pagador = getPagadorStella(nomePagador, cpfPagador, enderecoPagador);
 		Banco banco = getBancoSicoobStella();
 		Boleto boleto = getBoletoStella(banco, datas, beneficiario, pagador, valor, numeroDoBoleto);
@@ -62,7 +82,8 @@ public class CNAB240_SICOOB {
 		Beneficiario beneficiario = Beneficiario.novoBeneficiario().comNomeBeneficiario(nome).comAgencia(agencia)
 				.comDigitoAgencia(agencia).comCodigoBeneficiario(codigoBeneficiario)
 				.comDigitoCodigoBeneficiario(digitoCodBeneficiario).comNumeroConvenio(numConvenio).comCarteira(carteira)
-				.comEndereco(endereco).comNossoNumero(nossoNumero).comDocumento(CNB240_SICOOB_CONSTANTS.CNPJ_TEFAMEL);
+				.comEndereco(endereco).comNossoNumero(nossoNumero)
+				.comDocumento(constant.CNPJ);
 
 		return beneficiario;
 	}
@@ -82,12 +103,12 @@ public class CNAB240_SICOOB {
 			private static final long serialVersionUID = 1089834882486269286L;
 
 			public String getNumeroFormatadoComDigito() {
-				return CNB240_SICOOB_CONSTANTS.COD_BANCO;
+				return constant.getCOD_BANCO();
 			}
 
 			public String getNumeroFormatado() {
 
-				return CNB240_SICOOB_CONSTANTS.COD_BANCO;
+				return constant.getCOD_BANCO();
 			}
 
 			public String getNossoNumeroFormatado(Beneficiario beneficiario) {
@@ -98,7 +119,7 @@ public class CNAB240_SICOOB {
 			public String getNossoNumeroECodigoDocumento(Boleto boleto) {
 
 				return boleto.getBeneficiario().getNossoNumero() + "-"
-						+ CNAB240.verificadorNossoNumero(boleto.getBeneficiario().getNossoNumero());
+						+ CNAB240.verificadorNossoNumero(boleto.getBeneficiario().getNossoNumero()) ;
 			}
 
 			public URL getImage() {
@@ -115,17 +136,18 @@ public class CNAB240_SICOOB {
 
 			public String getCodigoBeneficiarioFormatado(Beneficiario beneficiario) {
 
-				return CNB240_SICOOB_CONSTANTS.COD_BENEFICIARIO;
+				return constant.getCOD_BENEFICIARIO();
 			}
 
 			public String getCarteiraFormatado(Beneficiario beneficiario) {
 
-				return CNB240_SICOOB_CONSTANTS.COD_CARTEIRA;
+				return constant.getCOD_CARTEIRA();
 			}
 
 			public String getAgenciaECodigoBeneficiario(Beneficiario beneficiario) {
 
-				return CNB240_SICOOB_CONSTANTS.COD_AGENCIA + "/" + CNB240_SICOOB_CONSTANTS.COD_BENEFICIARIO;
+				return constant.getCOD_AGENCIA() + "/"
+						+ constant.getCOD_BENEFICIARIO();
 			}
 
 			public String geraCodigoDeBarrasPara(Boleto boleto) {
@@ -176,8 +198,7 @@ public class CNAB240_SICOOB {
 		return g;
 	}
 
-	public Boleto getBoletoStella(Banco banco, Datas datas, Beneficiario beneficiario, Pagador pagador, String valor,
-			String numeroBoleto) {
+	public Boleto getBoletoStella(Banco banco, Datas datas, Beneficiario beneficiario, Pagador pagador, String valor, String numeroBoleto) {
 
 		Boleto boleto = Boleto.novoBoleto().comBanco(banco).comDatas(datas).comBeneficiario(beneficiario)
 				.comPagador(pagador).comValorBoleto(valor).comNumeroDoDocumento(numeroBoleto).comEspecieDocumento("ME")
@@ -185,43 +206,55 @@ public class CNAB240_SICOOB {
 
 		return boleto;
 	}
+	
+	public Boleto getBoletoStella(Banco banco, Datas datas, Beneficiario beneficiario, Pagador pagador, String valor, String numeroBoleto, String numeroDocumento) {
+
+		Boleto boleto = Boleto.novoBoleto()
+						.comBanco(banco)
+						.comDatas(datas)
+						.comBeneficiario(beneficiario)
+						.comPagador(pagador)
+						.comValorBoleto(valor)
+						.comNumeroDoDocumento(numeroBoleto)
+						.comEspecieDocumento("ME")
+						.comLocaisDePagamento("PAGAVEL EM QUALQUER BANCO ATE VENCIMENTO", "local 2");
+
+		return boleto;
+	}
 
 	public byte[] getBoletoPDF(org.aaf.financeiro.model.Pagador pagador) {
-		
+
 		List<Boleto> boletos = new ArrayList<Boleto>();
-		Endereco enderecoBeneficiario = getEnderecoStella(CNB240_SICOOB_CONSTANTS.RUA_TEFAMEL,
-				CNB240_SICOOB_CONSTANTS.BAIRRO_TEFAMEL, CNB240_SICOOB_CONSTANTS.CEP_TEFAMEL,
-				CNB240_SICOOB_CONSTANTS.CIDADE_TEFAMEL, CNB240_SICOOB_CONSTANTS.UF_TEFAMEL);
+		Endereco enderecoBeneficiario = getEnderecoStella(constant.RUA,	constant.BAIRRO, constant.CEP,constant.CIDADE, constant.UF);
 		String instrucao1 = "Desconto de R$"
-				+ OfficeUtil.retornarComVirgula(CNAB240_SICOOB_REMESSA_CONSTANTS.VALORDESCONTO)
+				+ OfficeUtil.retornarComVirgula(CNAB240_SICOOB_REMESSA_CONSTANTS_TEFAMEL.VALORDESCONTO)
 				+ " ate o vencimento.";
 		String instrucao2 = "Multa de "
-				+ OfficeUtil.retornarComVirgula(CNAB240_SICOOB_REMESSA_CONSTANTS.VALORMULTA)
+				+ OfficeUtil.retornarComVirgula(CNAB240_SICOOB_REMESSA_CONSTANTS_TEFAMEL.VALORMULTA)
 				+ "% apos o vencimento.";
 		String instrucao3 = "Juros de R$"
-				+ OfficeUtil
-						.retornarComVirgula(CNAB240_SICOOB_REMESSA_CONSTANTS.VALORJUROSAODIA)
+				+ OfficeUtil.retornarComVirgula(CNAB240_SICOOB_REMESSA_CONSTANTS_TEFAMEL.VALORJUROSAODIA)
 				+ "  ao dia, apos o vencimento.";
-		/*String instrucao4 = "Protestar 40 dias após o vencimento.";*/
-		
+		/* String instrucao4 = "Protestar 40 dias após o vencimento."; */
+
 		for (org.aaf.financeiro.model.Boleto boletoModel : pagador.getBoletos()) {
 			Datas datas = getDatasStella(boletoModel.getVencimento());
 			Endereco enderecoPagador = getEnderecoStella(pagador.getEndereco(), pagador.getBairro(), pagador.getCep(),
 					pagador.getCidade(), pagador.getUF());
-			
-			Beneficiario beneficiario = getBeneficiarioStella(CNB240_SICOOB_CONSTANTS.NOME_TEFAMEL,
-					CNB240_SICOOB_CONSTANTS.COD_AGENCIA, "", CNB240_SICOOB_CONSTANTS.COD_BENEFICIARIO,
-					CNB240_SICOOB_CONSTANTS.COD_BENEFICIARIO, CNB240_SICOOB_CONSTANTS.COD_CARTEIRA,
-					CNB240_SICOOB_CONSTANTS.CNPJ_TEFAMEL, enderecoBeneficiario, boletoModel.getNossoNumero()+"");
-			
+
+			Beneficiario beneficiario = getBeneficiarioStella(constant.NOME,
+					constant.getCOD_AGENCIA(), "", constant.getCOD_BENEFICIARIO(),
+					constant.getCOD_BENEFICIARIO(), constant.getCOD_CARTEIRA(),
+					constant.CNPJ, enderecoBeneficiario,
+					boletoModel.getNossoNumero() + "");
+
 			Pagador pagadorStella = getPagadorStella(pagador.getNome(), pagador.getCpfCNPJ(), enderecoPagador);
-			
+
 			Banco banco = getBancoSicoobStella();
-			
+//TODO xx certo
 			Boleto boleto = getBoletoStella(banco, datas, beneficiario, pagadorStella,
-					boletoModel.getValorNominal() + "", pagador.getNossoNumero()+"");
-			
-			
+					boletoModel.getValorNominal() + "", boletoModel.getNossoNumero() + "");
+
 			boleto.comInstrucoes(instrucao1, instrucao2, instrucao3);
 			boletos.add(boleto);
 		}

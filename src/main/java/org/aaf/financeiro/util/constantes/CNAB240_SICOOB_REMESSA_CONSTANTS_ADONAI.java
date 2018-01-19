@@ -1,6 +1,6 @@
-package org.aaf.financeiro.util;
+package org.aaf.financeiro.util.constantes;
 
-public class CNAB240_SICOOB_REMESSA_CONSTANTS {
+public class CNAB240_SICOOB_REMESSA_CONSTANTS_ADONAI {
 
 	//TODO HEADER
 	public static final String COD_BANCO = "756"; //CODIGO DA SICOOB
@@ -9,10 +9,10 @@ public class CNAB240_SICOOB_REMESSA_CONSTANTS {
 	public static final String VER_COD_COOPERATIVA = "0"; //CODIGO DA SICOOB
 	public static final String TP_REGISTRO = "0"; //TIPO DE REGISTRO
 	public static final String TP_EMPRESA = "2"; //TIPO DE REGISTRO de empresa 2 = CNPJ
-	public static final String NUM_INSCRICAO_EMPRESA =  "03660921000179"; //CNPJ da Tefamel
-	public static final String COD_CONTA_CORRENTE = "77426"; //Codigo do beneficiario no banco
+	public static final String NUM_INSCRICAO_EMPRESA =  "14395954000155"; //CNPJ da Tefamel
+	public static final String COD_CONTA_CORRENTE = "49469"; //Codigo do beneficiario no banco
 	public static final String VER_CONTA_CORRENTE = "0"; //Codigo do beneficiario no banco
-	public static final String NOME_EMPRESA = "FAVO DE MEL TRANSPORTE ESCOLAR E TURISMO LTDA - M"; //CNPJ da Tefamel
+	public static final String NOME_EMPRESA = "CENTRO EDUCACIONAL ADONAI LTDA - ME"; //CNPJ da Tefamel
 	public static final String NOME_BANCO = "SICOOB"; //Codigo do beneficiario no banco
 	public static final String COD_REMESSA__RETORNO = "1"; //Codigo do beneficiario no banco
 	public static final String NUM_VERSAO_LAYOUT = "081"; //Codigo do beneficiario no banco
@@ -31,7 +31,7 @@ public class CNAB240_SICOOB_REMESSA_CONSTANTS {
 	public static final String COD_PROTESTO = "3";
 	public static final String DIAS_P_PROTESTO = "00";
 	public static final String DIAS_P_BAIXA = "180";
-	public static final String VALORJUROSAODIA = "050";//50 centavos
+	public static final String VALORJUROSAODIA = "025";//25 centavos
 	public static final String VALORDESCONTO = "2000";//20 reais
 	
 	//TODO SEGUIMENTO Q

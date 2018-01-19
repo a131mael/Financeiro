@@ -1,5 +1,7 @@
 package org.aaf.financeiro.util;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,8 +9,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class OfficeUtil {
 
@@ -45,6 +50,20 @@ public class OfficeUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static List<String> lerArquivo(String arquivo){
+		List<String> linhasAquivo = new ArrayList<String>(); 
+		try{
+	         BufferedReader br = new BufferedReader(new FileReader(arquivo));
+	         while(br.ready()){
+	        		 linhasAquivo.add(br.readLine()) ;
+	         }
+	         br.close();
+	      }catch(IOException ioe){
+	         ioe.printStackTrace();
+	      }
+		return linhasAquivo;
 	}
 	
 	public static String espacos(int quantidade){
@@ -87,12 +106,16 @@ public class OfficeUtil {
 		return texto.substring(0,quantidade+1);
 	}
 	
-	
 	public static String retornaDataSomenteNumeros(Date data){
-		final DateFormat df = new SimpleDateFormat("ddMMyyyy");
-		return df.format(data);
+		if(data != null){
+			final DateFormat df = new SimpleDateFormat("ddMMyyyy");
+			return df.format(data);
+		}else{
+			return null;
+		}
 	}
 	public static String retornaHoraSomenteNumeros(Date data){
+		
 		final DateFormat df = new SimpleDateFormat("hhmmss");
 		return df.format(data);
 	}
@@ -102,6 +125,16 @@ public class OfficeUtil {
 		sb = sb.replace(".", "");
 		sb = sb.replace(",", "");
 		return sb;
+	}
+	
+	public static Date retornaData(String dataString) throws ParseException{
+		if(dataString != null){
+			SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+			Date date = formatter.parse(dataString);
+			return date;
+		}else{
+			return null;
+		}
 	}
 	
 	public static String retornarComVirgula(String valor){

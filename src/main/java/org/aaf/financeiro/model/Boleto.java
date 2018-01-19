@@ -28,7 +28,13 @@ public class Boleto  {
     
     private double valorNominal;
     
-    private long nossoNumero;
+    private String nossoNumero;
+    
+    private Double valorPago;
+    
+    private String dataPagamento;
+    
+    private String movimento;
 
 	public Long getId() {
 		return id;
@@ -62,12 +68,36 @@ public class Boleto  {
 		this.emissao = emissao;
 	}
 
-	public long getNossoNumero() {
+	public String getNossoNumero() {
 		return nossoNumero;
 	}
 
-	public void setNossoNumero(long nossoNumero) {
+	public void setNossoNumero(String nossoNumero) {
 		this.nossoNumero = nossoNumero;
+	}
+
+	public Double getValorPago() {
+		return valorPago;
+	}
+
+	public void setValorPago(Double valorPago) {
+		this.valorPago = valorPago;
+	}
+
+	public String getDataPagamento() {
+		return dataPagamento;
+	}
+
+	public void setDataPagamento(String dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+
+	public String getMovimento() {
+		return movimento;
+	}
+
+	public void setMovimento(String movimento) {
+		this.movimento = movimento;
 	}
     
     

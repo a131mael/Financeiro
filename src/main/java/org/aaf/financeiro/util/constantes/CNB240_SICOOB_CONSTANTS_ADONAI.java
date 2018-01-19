@@ -1,6 +1,6 @@
-package org.aaf.financeiro.util;
+package org.aaf.financeiro.util.constantes;
 
-public class CNB240_SICOOB_CONSTANTS {
+public class CNB240_SICOOB_CONSTANTS_ADONAI {
 
 	//TODO CAMPO 1
 	public static final String COD_BANCO = "756"; //CODIGO DA SICOOB
@@ -11,8 +11,8 @@ public class CNB240_SICOOB_CONSTANTS {
 	
 	//TODO CAMPO 2
 	public static final String COD_MODALIDADE = "01"; //Simples com Registro
-	public static final String COD_BENEFICIARIO = "1199870"; //Codigo do beneficiario no banco
-	public static final String NOSSO_NUMERO = "10000"; //Nosso NUmero de boleto começa em 10000 e eh unico para cada boleto
+	public static final String COD_BENEFICIARIO = "0762504"; //Codigo do beneficiario no banco
+	public static final String NOSSO_NUMERO = "30000"; //Nosso NUmero de boleto começa em 10000 e eh unico para cada boleto
 	public static final String VER_CAMPO2 = "2" ; //CODIGO VERIFICADOR DO CAMPO 2
 	
 	
@@ -31,12 +31,12 @@ public class CNB240_SICOOB_CONSTANTS {
 	
 	public static final String COD_COOPERATiVA = "4434"; //CODIGO DA COOPERATIVA PARA DV do nosso numero
 	
-	public static final String CNPJ_TEFAMEL = "03.660.921/0001-79"; //CNPJ da Tefamel
-	public static final String NOME_TEFAMEL = "FAVO DE MEL TRANSPORTE ESCOLAR E TURISMO LTDA - M"; //CNPJ da Tefamel
-	public static final String RUA_TEFAMEL = "Rua José Cosme Pamplona"; //CNPJ da Tefamel
-	public static final String BAIRRO_TEFAMEL = "Bela Vista"; //CNPJ da Tefamel
-	public static final String CIDADE_TEFAMEL = "PALHOCA"; //CNPJ da Tefamel
-	public static final String CEP_TEFAMEL = "88132-700"; //CNPJ da Tefamel
-	public static final String UF_TEFAMEL = "SC"; //CNPJ da Tefamel
+	public static final String CNPJ = "14.395.954/0001-55"; //CNPJ da Tefamel
+	public static final String NOME= "CENTRO EDUCACIONAL ADONAI LTDA - ME"; //CNPJ da Tefamel
+	public static final String RUA = "Rua José Cosme Pamplona"; //CNPJ da Tefamel
+	public static final String BAIRRO = "Bela Vista"; //CNPJ da Tefamel
+	public static final String CIDADE = "PALHOCA"; //CNPJ da Tefamel
+	public static final String CEP = "88132-700"; //CNPJ da Tefamel
+	public static final String UF = "SC"; //CNPJ da Tefamel
 	
 }

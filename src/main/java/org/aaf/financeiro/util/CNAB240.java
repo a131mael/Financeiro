@@ -4,6 +4,9 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.aaf.financeiro.util.constantes.CNB240_SICOOB_CONSTANTS_ADONAI;
+import org.aaf.financeiro.util.constantes.CNB240_SICOOB_CONSTANTS_TEFAMEL;
+import org.aaf.financeiro.util.constantes.Constante;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
@@ -13,6 +16,24 @@ import br.com.caelum.stella.boleto.Boleto;
 import br.com.caelum.stella.boleto.bancos.gerador.GeradorDeDigito;
 
 public class CNAB240 {
+	
+	private static Constante constant = null;
+
+	public CNAB240(int constante) {
+		switch (constante) {
+		case 1: //TEFAMEL
+			constant =  new Constante(new CNB240_SICOOB_CONSTANTS_TEFAMEL());
+			break;
+
+		case 2: //ADONAI
+			constant =  new Constante(new CNB240_SICOOB_CONSTANTS_ADONAI());
+			break;
+
+		default:
+			break;
+		}
+
+	}
 
 	public static void main(String[] args) {
 
@@ -54,7 +75,7 @@ public class CNAB240 {
 			}
 
 			public String getCodigoBeneficiarioFormatado(Beneficiario arg0) {
-				return CNB240_SICOOB_CONSTANTS.COD_BENEFICIARIO;
+				return arg0.getCodigoBeneficiario();
 			}
 
 			public String getCarteiraFormatado(Beneficiario arg0) {
@@ -64,7 +85,7 @@ public class CNAB240 {
 
 			public String getAgenciaECodigoBeneficiario(Beneficiario arg0) {
 				
-				return CNB240_SICOOB_CONSTANTS.COD_AGENCIA+CNB240_SICOOB_CONSTANTS.COD_BENEFICIARIO;
+				return constant.COD_AGENCIA+constant.COD_BENEFICIARIO;
 			}
 
 			public String geraCodigoDeBarrasPara(Boleto arg0) {
@@ -78,29 +99,29 @@ public class CNAB240 {
 
 	public static String gerarNumeroBoleto(String numeroBoleto, Date dataVencimento, String valorBoleto) {
 		StringBuilder campo1 = new StringBuilder();
-		campo1.append(CNB240_SICOOB_CONSTANTS.COD_BANCO);
-		campo1.append(CNB240_SICOOB_CONSTANTS.COD_MOEDA);
-		campo1.append(CNB240_SICOOB_CONSTANTS.COD_CARTEIRA);
-		campo1.append(CNB240_SICOOB_CONSTANTS.COD_AGENCIA);
+		campo1.append(constant.COD_BANCO);
+		campo1.append(constant.COD_MOEDA);
+		campo1.append(constant.COD_CARTEIRA);
+		campo1.append(constant.COD_AGENCIA);
 		campo1.append(modulo10(campo1.toString()));
 
 		StringBuilder campo2 = new StringBuilder();
-		campo2.append(CNB240_SICOOB_CONSTANTS.COD_MODALIDADE);
-		campo2.append(CNB240_SICOOB_CONSTANTS.COD_BENEFICIARIO);
+		campo2.append(constant.COD_MODALIDADE);
+		campo2.append(constant.COD_BENEFICIARIO);
 		campo2.append(completaNossoNumero(numeroBoleto).substring(0, 1));
 		campo2.append(modulo10(campo2.toString()));
 
 		StringBuilder campo3 = new StringBuilder();
 		campo3.append(completaNossoNumero(numeroBoleto).substring(1, completaNossoNumero(numeroBoleto).length()));
 		campo3.append(verificadorNossoNumero(completaNossoNumero(numeroBoleto)));
-		campo3.append(CNB240_SICOOB_CONSTANTS.NUM_PARCELA);
+		campo3.append(constant.NUM_PARCELA);
 		campo3.append(modulo10(campo3.toString()));
 
 		StringBuilder campo4 = new StringBuilder();
 		campo4.append(fatorDeVencimento(dataVencimento));
 		campo4.append(concatenarZerosAEsquerda(valorBoleto, 10));
 
-		StringBuilder campoL = new StringBuilder();
+		/*StringBuilder campoL = new StringBuilder();
 		campoL.append(CNB240_SICOOB_CONSTANTS.COD_BANCO);
 		campoL.append(CNB240_SICOOB_CONSTANTS.COD_MOEDA);
 		campoL.append(CNB240_SICOOB_CONSTANTS.COD_CARTEIRA);
@@ -112,7 +133,7 @@ public class CNAB240 {
 		campoL.append(verificadorNossoNumero(completaNossoNumero(numeroBoleto)));
 		campoL.append(CNB240_SICOOB_CONSTANTS.NUM_PARCELA);
 		campoL.append(fatorDeVencimento(dataVencimento));
-		campoL.append(concatenarZerosAEsquerda(valorBoleto, 10));
+		campoL.append(concatenarZerosAEsquerda(valorBoleto, 10));*/
 
 		StringBuilder numeroBoletoFinal = new StringBuilder();
 		numeroBoletoFinal.append(campo1.toString() + campo2.toString() + campo3.toString()
@@ -124,58 +145,58 @@ public class CNAB240 {
 
 	public static String sequenciaCodigoBarrasSemDV(String numeroBoleto, Date dataVencimento, String valorBoleto) {
 		StringBuilder seq = new StringBuilder();
-		seq.append(CNB240_SICOOB_CONSTANTS.COD_BANCO);
-		seq.append(CNB240_SICOOB_CONSTANTS.COD_MOEDA);
+		seq.append(constant.COD_BANCO);
+		seq.append(constant.COD_MOEDA);
 		seq.append(fatorDeVencimento(dataVencimento));
 		seq.append((concatenarZerosAEsquerda(valorBoleto, 10)));
 
-		seq.append(CNB240_SICOOB_CONSTANTS.COD_CARTEIRA);
-		seq.append(CNB240_SICOOB_CONSTANTS.COD_AGENCIA);
-		seq.append(CNB240_SICOOB_CONSTANTS.COD_MODALIDADE);
-		seq.append(CNB240_SICOOB_CONSTANTS.COD_BENEFICIARIO);
+		seq.append(constant.COD_CARTEIRA);
+		seq.append(constant.COD_AGENCIA);
+		seq.append(constant.COD_MODALIDADE);
+		seq.append(constant.COD_BENEFICIARIO);
 		seq.append(completaNossoNumero(numeroBoleto));
 		seq.append(verificadorNossoNumero(completaNossoNumero(numeroBoleto)));
 
-		seq.append(CNB240_SICOOB_CONSTANTS.NUM_PARCELA);
+		seq.append(constant.NUM_PARCELA);
 
 		return seq.toString();
 	}
 	
 	public static String sequenciaCodigoBarras(String numeroBoleto, Date dataVencimento, String valorBoleto) {
 		StringBuilder seq = new StringBuilder();
-		seq.append(CNB240_SICOOB_CONSTANTS.COD_BANCO);
-		seq.append(CNB240_SICOOB_CONSTANTS.COD_MOEDA);
+		seq.append(constant.COD_BANCO);
+		seq.append(constant.COD_MOEDA);
 		
 		seq.append(fatorDeVencimento(dataVencimento));
 		seq.append((concatenarZerosAEsquerda(valorBoleto, 10)));
 
-		seq.append(CNB240_SICOOB_CONSTANTS.COD_CARTEIRA);
-		seq.append(CNB240_SICOOB_CONSTANTS.COD_AGENCIA);
-		seq.append(CNB240_SICOOB_CONSTANTS.COD_MODALIDADE);
-		seq.append(CNB240_SICOOB_CONSTANTS.COD_BENEFICIARIO);
+		seq.append(constant.COD_CARTEIRA);
+		seq.append(constant.COD_AGENCIA);
+		seq.append(constant.COD_MODALIDADE);
+		seq.append(constant.COD_BENEFICIARIO);
 		seq.append(completaNossoNumero(numeroBoleto));
 		seq.append(verificadorNossoNumero(completaNossoNumero(numeroBoleto)));
 
-		seq.append(CNB240_SICOOB_CONSTANTS.NUM_PARCELA);
+		seq.append(constant.NUM_PARCELA);
 
 		int dv = modulo11(seq.toString());
 		
 		StringBuilder seqDV = new StringBuilder();
-		seqDV.append(CNB240_SICOOB_CONSTANTS.COD_BANCO);
-		seqDV.append(CNB240_SICOOB_CONSTANTS.COD_MOEDA);
+		seqDV.append(constant.COD_BANCO);
+		seqDV.append(constant.COD_MOEDA);
 		seqDV.append(dv);
 		
 		seqDV.append(fatorDeVencimento(dataVencimento));
 		seqDV.append((concatenarZerosAEsquerda(valorBoleto, 10)));
 
-		seqDV.append(CNB240_SICOOB_CONSTANTS.COD_CARTEIRA);
-		seqDV.append(CNB240_SICOOB_CONSTANTS.COD_AGENCIA);
-		seqDV.append(CNB240_SICOOB_CONSTANTS.COD_MODALIDADE);
-		seqDV.append(CNB240_SICOOB_CONSTANTS.COD_BENEFICIARIO);
+		seqDV.append(constant.COD_CARTEIRA);
+		seqDV.append(constant.COD_AGENCIA);
+		seqDV.append(constant.COD_MODALIDADE);
+		seqDV.append(constant.COD_BENEFICIARIO);
 		seqDV.append(completaNossoNumero(numeroBoleto));
 		seqDV.append(verificadorNossoNumero(completaNossoNumero(numeroBoleto)));
 
-		seqDV.append(CNB240_SICOOB_CONSTANTS.NUM_PARCELA);
+		seqDV.append(constant.NUM_PARCELA);
 		
 		return seqDV.toString();
 	}
@@ -211,7 +232,6 @@ public class CNAB240 {
 	public static int modulo11(String numero) {
 		int soma = 0;
 		int multiplicador = 2;
-		int iteracoes = 0;
 
 		for (int i = numero.length(); i >= 1; i--) {
 			int numeroAux = Integer.valueOf(numero.substring(i - 1, i));
@@ -223,11 +243,11 @@ public class CNAB240 {
 			 * System.out.println("soma" + soma);
 			 * System.out.println("------------------------------------------");
 			 */
-			iteracoes++;
 			if (multiplicador == 9) {
 				multiplicador = 2;
+			}else{
+				multiplicador++;
 			}
-			multiplicador++;
 		}
 
 		int dv = soma % 11;
@@ -280,8 +300,8 @@ public class CNAB240 {
 
 	public static String verificadorNossoNumero(String numeroBoleto) {
 		int soma = 0;
-		String nossoNumero = concatenarZerosAEsquerda(CNB240_SICOOB_CONSTANTS.COD_AGENCIA, 4)
-				+ concatenarZerosAEsquerda(CNB240_SICOOB_CONSTANTS.COD_BENEFICIARIO, 10)
+		String nossoNumero = concatenarZerosAEsquerda(constant.COD_AGENCIA, 4)
+				+ concatenarZerosAEsquerda(constant.COD_BENEFICIARIO, 10)
 				+ concatenarZerosAEsquerda(numeroBoleto, 7);
 		int[] constant = { 3, 1, 9, 7, 3, 1, 9, 7, 3, 1, 9, 7, 3, 1, 9, 7, 3, 1, 9, 7, 3 };
 
