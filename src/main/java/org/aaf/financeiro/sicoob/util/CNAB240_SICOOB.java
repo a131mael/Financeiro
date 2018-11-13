@@ -235,7 +235,7 @@ public class CNAB240_SICOOB {
 		String instrucao3 = "Juros de R$"
 				+ OfficeUtil.retornarComVirgula(CNAB240_SICOOB_REMESSA_CONSTANTS_TEFAMEL.VALORJUROSAODIA)
 				+ "  ao dia, apos o vencimento.";
-		/* String instrucao4 = "Protestar 40 dias após o vencimento."; */
+		 String instrucao4 = "ATENÇÃO - ESSE BOLETO PODE SER PAGO EM QUALQUER AGENCIA BANCÁRIA, MESMO APÓS O VENCIMENTO **.  "; 
 
 		for (org.aaf.financeiro.model.Boleto boletoModel : pagador.getBoletos()) {
 			Datas datas = getDatasStella(boletoModel.getVencimento());
@@ -255,7 +255,7 @@ public class CNAB240_SICOOB {
 			Boleto boleto = getBoletoStella(banco, datas, beneficiario, pagadorStella,
 					boletoModel.getValorNominal() + "", boletoModel.getNossoNumero() + "");
 
-			boleto.comInstrucoes(instrucao1, instrucao2, instrucao3);
+			boleto.comInstrucoes(instrucao1, instrucao2, instrucao3, instrucao4);
 			boletos.add(boleto);
 		}
 
