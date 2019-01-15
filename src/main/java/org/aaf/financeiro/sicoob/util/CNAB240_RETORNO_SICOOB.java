@@ -28,6 +28,7 @@ public class CNAB240_RETORNO_SICOOB {
 				pagador.setCpfCNPJ(getCPFPagador(arquivo.get(j)));
 				b.setMovimento(getMovimentoRetorno(arquivo.get(j)));
 				b.setNossoNumero(getNumeroDocumento(arquivo.get(j)));
+				b.setDecurso(getIsDecurso(arquivo.get(j)));
 				
 				// segmento U	
 				b.setValorPago(Double.parseDouble(getValorPago(arquivo.get(j+1))) / 100);
@@ -69,6 +70,14 @@ public class CNAB240_RETORNO_SICOOB {
 			}
 		}
 		return pagadores;
+	}
+	
+	private static boolean getIsDecurso(String string) {
+		String decurso = getValor(string, 222, 223);
+		if(decurso.equalsIgnoreCase("13")){
+			return true;
+		}
+		return false;
 	}
 
 	private static String getValorNominal(String string) {

@@ -34,6 +34,8 @@ public class Boleto  {
     
     private String dataPagamento;
     
+    private Boolean decurso;
+    
     private String movimento;
 
 	public Long getId() {
@@ -98,6 +100,14 @@ public class Boleto  {
 
 	public void setMovimento(String movimento) {
 		this.movimento = movimento;
+	}
+
+	public Boolean isDecurso() {
+		return decurso;
+	}
+
+	public void setDecurso(Boolean decurso) {
+		this.decurso = decurso;
 	}
     
     

@@ -8,6 +8,7 @@ import org.aaf.financeiro.model.Boleto;
 import org.aaf.financeiro.model.Pagador;
 import org.aaf.financeiro.util.CNAB240;
 import org.aaf.financeiro.util.OfficeUtil;
+import org.aaf.financeiro.util.Util;
 import org.aaf.financeiro.util.constantes.CNAB240_SICOOB_REMESSA_CONSTANTS_ADONAI;
 import org.aaf.financeiro.util.constantes.CNAB240_SICOOB_REMESSA_CONSTANTS_TEFAMEL;
 import org.aaf.financeiro.util.constantes.ConstanteRemessa;
@@ -36,6 +37,10 @@ public class CNAB240_REMESSA_SICOOB {
 	
 	public static byte[] geraRemessa(Pagador pagador,String sequencialArquivo){
 		return geraRemessa(pagador,sequencialArquivo,false);
+	}
+	
+	public static byte[] geraRemessa(Pagador pagador,String sequencialArquivo, String caminhoArqivo){
+		return geraRemessa(pagador,sequencialArquivo,false, caminhoArqivo);
 	}
 	
 	public static byte[] geraRemessa(Pagador pagador,String sequencialArquivo, boolean baixa){
@@ -73,6 +78,42 @@ public class CNAB240_REMESSA_SICOOB {
 		OfficeUtil.criarTXT(caminho, cnab.toString());
 		
 		return OfficeUtil.pathToByteArray(caminho);
+	}
+	
+	public static byte[] geraRemessa(Pagador pagador,String sequencialArquivo, boolean baixa, String caminhoArquivo){
+		Date dataGeracaoRemessa = new Date();
+		int sequencialSeguimento = 0;
+		double valorTotal = 0;
+		StringBuilder cnab = new StringBuilder();
+		cnab.append(header(dataGeracaoRemessa, sequencialArquivo));
+		cnab.append(OfficeUtil.quebraLinhaTXT);
+		cnab.append(headerLote(1,1,dataGeracaoRemessa));//todo segundo parametro tem que incrementar caso o arquivo seja reenviado
+		
+		for(Boleto boleto : pagador.getBoletos()){
+			valorTotal += boleto.getValorNominal();
+			sequencialSeguimento++;
+			cnab.append(OfficeUtil.quebraLinhaTXT);
+			cnab.append(seguimentoP(1, sequencialSeguimento, montarNossoNumero(boleto.getNossoNumero()+"",cnab240).toString(), String.valueOf(boleto.getId()), boleto.getVencimento(), boleto.getValorNominal(), boleto.getEmissao(),  String.valueOf(boleto.getId()),baixa));		
+			sequencialSeguimento++;
+			cnab.append(OfficeUtil.quebraLinhaTXT);
+			cnab.append(seguimentoQ(1, sequencialSeguimento, pagador.getCpfCNPJ().replace(".", "").replace("-", "").trim(), pagador.getNome(), pagador.getEndereco(), pagador.getBairro(), pagador.getCep(), pagador.getCidade(), pagador.getUF()));			
+			sequencialSeguimento++;
+			cnab.append(OfficeUtil.quebraLinhaTXT);
+			cnab.append(seguimentoR(1, sequencialSeguimento, boleto.getVencimento()));
+			sequencialSeguimento++;
+			cnab.append(OfficeUtil.quebraLinhaTXT);	
+			cnab.append(seguimentoS(1, sequencialSeguimento));
+		}
+		cnab.append(OfficeUtil.quebraLinhaTXT);
+		cnab.append(traillerLote(1, (2+sequencialSeguimento), sequencialSeguimento/4, valorTotal, 0, 0, 0, 0));
+		cnab.append(OfficeUtil.quebraLinhaTXT);
+		cnab.append(traillerArquivo(1, sequencialSeguimento/4));
+		
+		caminhoArquivo = caminhoArquivo +  File.separator +pagador.getNossoNumero()+ ".txt";
+		//String caminho2 =  "C:\\Users\\Abimael Fidencio\\Desktop\\cnb240.txt";
+		OfficeUtil.criarTXT(caminhoArquivo, cnab.toString());
+		
+		return OfficeUtil.pathToByteArray(caminhoArquivo);
 	}
 	
 	
@@ -236,19 +277,18 @@ public class CNAB240_REMESSA_SICOOB {
 		header.append(constant.MOVIMENTO_REMESSA_ENTRADA_TITULO);
 		header.append(constant.TP_PAGADOR);
 		header.append(OfficeUtil.preencherZeroEsquerda(cpfPagador, 15));
-		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(nomePagador, 41), 39));
-		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(endereco, 41), 39));
-		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(bairro, 16), 14));
+		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(Util.removeCaracteresEspeciais(nomePagador), 41), 39));
+		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(Util.removeCaracteresEspeciais(endereco), 41), 39));
+		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(Util.removeCaracteresEspeciais(bairro), 16), 14));
 		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(cep, 9), 7));
-		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(cidade, 16), 14));
+		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(Util.removeCaracteresEspeciais(cidade), 16), 14));
 		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(UF, 3), 1));
 		header.append(constant.TP_PAGADOR);
 		header.append(OfficeUtil.preencherZeroEsquerda(cpfPagador, 15));
-		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(nomePagador, 41), 39));
+		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(Util.removeCaracteresEspeciais(nomePagador), 41), 39));
 		header.append(OfficeUtil.preencherZeroEsquerda("", 3));
 		header.append(OfficeUtil.preencherEspacosEsquerda("", 20));
 		header.append(OfficeUtil.preencherEspacosEsquerda("", 8));
-			
 		return header;
 	}
 	public static StringBuilder seguimentoR(int sequencialInternaLote,int sequencialregistro,Date dataVencimento){

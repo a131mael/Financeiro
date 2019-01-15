@@ -129,8 +129,9 @@ public class Constante {
 		COD_BENEFICIARIO = cOD_BENEFICIARIO;
 	}
 
-	/*public static String LOCAL_ARMAZENAMENTO_REMESSA = "C:\\Sicoobnet\\RetornoCNAB\\";*/
-	public static String LOCAL_ARMAZENAMENTO_REMESSA = File.separator+"home"+File.separator+"ubuntu" + File.separator+"cnab" + File.separator;
+	//public static String LOCAL_ARMAZENAMENTO_REMESSA = "C:\\Sicoobnet\\RetornoCNAB\\";
+	//public static String LOCAL_ARMAZENAMENTO_REMESSA = File.separator+"home"+File.separator+"ubuntu" + File.separator+"cnab" + File.separator;
+	public static String LOCAL_ARMAZENAMENTO_REMESSA = File.separator+"home"+File.separator+"ubuntu" + File.separator+"Skyunix" + File.separator+"inbox"+ File.separator;
 	public static String LOCAL_ARMAZENAMENTO_EXTRATO = File.separator+"home"+File.separator+"ubuntu" + File.separator+"extrato" + File.separator;
 	/*public static String LOCAL_ARMAZENAMENTO_EXTRATO = "C:\\Sicoobnet\\RetornoCNAB\\extrato\\";*/
 	public static String COD_BANCO = "756"; 
