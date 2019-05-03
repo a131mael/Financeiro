@@ -283,9 +283,11 @@ public class CNAB240_REMESSA_SICOOB {
 		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(cep, 9), 7));
 		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(Util.removeCaracteresEspeciais(cidade), 16), 14));
 		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(UF, 3), 1));
-		header.append(constant.TP_PAGADOR);
-		header.append(OfficeUtil.preencherZeroEsquerda(cpfPagador, 15));
-		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(Util.removeCaracteresEspeciais(nomePagador), 41), 39));
+		header.append(constant.TP_SACADOR_AVALISTA);
+		header.append(OfficeUtil.preencherZeroEsquerda("0", 15));
+		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(Util.removeCaracteresEspeciais(" "), 41), 39));
+		/*header.append(OfficeUtil.preencherZeroEsquerda(cpfPagador, 15));
+		header.append(OfficeUtil.limiteMaximo(OfficeUtil.preencherEspacosDireita(Util.removeCaracteresEspeciais(nomePagador), 41), 39));*/
 		header.append(OfficeUtil.preencherZeroEsquerda("", 3));
 		header.append(OfficeUtil.preencherEspacosEsquerda("", 20));
 		header.append(OfficeUtil.preencherEspacosEsquerda("", 8));

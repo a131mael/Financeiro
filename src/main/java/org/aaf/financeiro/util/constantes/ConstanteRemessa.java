@@ -52,7 +52,9 @@ public class ConstanteRemessa {
 		//TODO SEGUIMENTO Q
 		public static  String TP_REGISTRO_SEGUIMENTO_Q = "3";
 		public static  String SEGUIMENTO_Q = "Q"; //LOTE DE SERVICO
-			
+		public static  String TP_SACADOR_AVALISTA = "0"; 
+		
+		
 		//TODO SEGUIMENTO R
 		public static  String TP_REGISTRO_SEGUIMENTO_R = "3";
 		public static  String SEGUIMENTO_R = "R"; //LOTE DE SERVICO
