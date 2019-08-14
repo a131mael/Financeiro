@@ -31,7 +31,7 @@ public class CNAB240_RETORNO_SICOOB {
 				b.setDecurso(getIsDecurso(arquivo.get(j)));
 				
 				// segmento U	
-				b.setValorPago(Double.parseDouble(getValorPago(arquivo.get(j+1))) / 100);
+				//b.setValorPago(Double.parseDouble(getValorPago(arquivo.get(j+1))) / 100);
 				if((b.getMovimento().equalsIgnoreCase("09") || b.getMovimento().equalsIgnoreCase("02") )&&  b.getValorPago() == 0D){
 					b.setValorNominal(Double.parseDouble(getValorNominal(arquivo.get(j))));
 					b.setValorPago(b.getValorNominal());

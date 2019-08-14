@@ -394,4 +394,8 @@ public class CNAB240_REMESSA_SICOOB {
 	public byte[] geraBaixa(Pagador pagador, String sequencialArquivo) {
 		return geraRemessa(pagador, sequencialArquivo, true);
 	}
+	
+	public byte[] geraBaixa(Pagador pagador, String sequencialArquivo,String caminhoArquivo) {
+		return geraRemessa(pagador, sequencialArquivo, true, caminhoArquivo);
+	}
 }
