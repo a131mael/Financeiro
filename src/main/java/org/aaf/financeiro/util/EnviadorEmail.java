@@ -59,7 +59,7 @@ public class EnviadorEmail {
 			Transport.send(message);
 			System.out.println(returnStatement);
 		} catch (Exception e) {
-			
+			System.out.println(e);
 			returnStatement = "error in sending mail";
 			//e.printStackTrace();
 			System.out.println("Nao foi possivel enviar email para : " + destinatarios);
