@@ -117,6 +117,49 @@ public class CNAB240_REMESSA_SICOOB {
 	}
 	
 	
+	public static byte[] geraRemessa(List<Pagador> pagadores,String sequencialArquivo, boolean baixa, String caminhoArquivo){
+		Date dataGeracaoRemessa = new Date();
+		int sequencialSeguimento = 0;
+		double valorTotal = 0;
+		StringBuilder cnab = new StringBuilder();
+		cnab.append(header(dataGeracaoRemessa, sequencialArquivo));
+		cnab.append(OfficeUtil.quebraLinhaTXT);
+		cnab.append(headerLote(1,1,dataGeracaoRemessa));//todo segundo parametro tem que incrementar caso o arquivo seja reenviado
+		
+		for(Pagador pagador : pagadores){
+			for(Boleto boleto : pagador.getBoletos()){
+				valorTotal += boleto.getValorNominal();
+				sequencialSeguimento++;
+				cnab.append(OfficeUtil.quebraLinhaTXT);
+				cnab.append(seguimentoP(1, sequencialSeguimento, montarNossoNumero(boleto.getNossoNumero()+"",cnab240).toString(), String.valueOf(boleto.getId()), boleto.getVencimento(), boleto.getValorNominal(), boleto.getEmissao(),  String.valueOf(boleto.getId()),baixa));		
+				sequencialSeguimento++;
+				cnab.append(OfficeUtil.quebraLinhaTXT);
+				cnab.append(seguimentoQ(1, sequencialSeguimento, pagador.getCpfCNPJ().replace(".", "").replace("-", "").trim(), pagador.getNome(), pagador.getEndereco(), pagador.getBairro(), pagador.getCep(), pagador.getCidade(), pagador.getUF()));			
+				sequencialSeguimento++;
+				cnab.append(OfficeUtil.quebraLinhaTXT);
+				cnab.append(seguimentoR(1, sequencialSeguimento, boleto.getVencimento()));
+				sequencialSeguimento++;
+				cnab.append(OfficeUtil.quebraLinhaTXT);	
+				cnab.append(seguimentoS(1, sequencialSeguimento));
+			}
+		}
+		
+		cnab.append(OfficeUtil.quebraLinhaTXT);
+		cnab.append(traillerLote(1, (2+sequencialSeguimento), sequencialSeguimento/4, valorTotal, 0, 0, 0, 0));
+		cnab.append(OfficeUtil.quebraLinhaTXT);
+		cnab.append(traillerArquivo(1, sequencialSeguimento/4));
+		
+		caminhoArquivo = caminhoArquivo +  File.separator +dataGeracaoRemessa.getTime()+ ".txt";
+		//String caminho2 =  "C:\\Users\\Abimael Fidencio\\Desktop\\cnb240.txt";
+		OfficeUtil.criarTXT(caminhoArquivo, cnab.toString());
+		
+		System.out.println("Chegou no fim da geracao da remessa no caminho" + caminhoArquivo );
+		
+		
+		return OfficeUtil.pathToByteArray(caminhoArquivo);
+	}
+	
+	
 	public static StringBuilder montarNossoNumero(String numeroTitulo, CNAB240 cnab240){
 		StringBuilder sb = new StringBuilder();
 		sb.append(OfficeUtil.preencherZeroEsquerda(numeroTitulo, 8)); 
@@ -397,5 +440,9 @@ public class CNAB240_REMESSA_SICOOB {
 	
 	public byte[] geraBaixa(Pagador pagador, String sequencialArquivo,String caminhoArquivo) {
 		return geraRemessa(pagador, sequencialArquivo, true, caminhoArquivo);
+	}
+	
+	public byte[] geraBaixa(List<Pagador> pagadorores, String sequencialArquivo,String caminhoArquivo) {
+		return geraRemessa(pagadorores, sequencialArquivo, true, caminhoArquivo);
 	}
 }

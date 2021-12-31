@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.aaf.financeiro.util.CNAB240;
 import org.aaf.financeiro.util.OfficeUtil;
-import org.aaf.financeiro.util.constantes.CNAB240_SICOOB_REMESSA_CONSTANTS_TEFAMEL;
 import org.aaf.financeiro.util.constantes.CNB240_SICOOB_CONSTANTS_ADONAI;
 import org.aaf.financeiro.util.constantes.CNB240_SICOOB_CONSTANTS_TEFAMEL;
 import org.aaf.financeiro.util.constantes.Constante;
@@ -227,13 +226,13 @@ public class CNAB240_SICOOB {
 		List<Boleto> boletos = new ArrayList<Boleto>();
 		Endereco enderecoBeneficiario = getEnderecoStella(constant.RUA,	constant.BAIRRO, constant.CEP,constant.CIDADE, constant.UF);
 		String instrucao1 = "Desconto de R$"
-				+ OfficeUtil.retornarComVirgula(CNAB240_SICOOB_REMESSA_CONSTANTS_TEFAMEL.VALORDESCONTO)
+				+ OfficeUtil.retornarComVirgula(constant.VALORDESCONTO)
 				+ " ate o vencimento.";
 		String instrucao2 = "Multa de "
-				+ OfficeUtil.retornarComVirgula(CNAB240_SICOOB_REMESSA_CONSTANTS_TEFAMEL.VALORMULTA)
+				+ OfficeUtil.retornarComVirgula(constant.VALORMULTA)
 				+ "% apos o vencimento.";
 		String instrucao3 = "Juros de R$"
-				+ OfficeUtil.retornarComVirgula(CNAB240_SICOOB_REMESSA_CONSTANTS_TEFAMEL.VALORJUROSAODIA)
+				+ OfficeUtil.retornarComVirgula(constant.VALORJUROSAODIA)
 				+ "  ao dia, apos o vencimento.";
 		 String instrucao4 = "ATENÇÃO - ESSE BOLETO PODE SER PAGO EM QUALQUER AGENCIA BANCÁRIA, MESMO APÓS O VENCIMENTO **.  "; 
 

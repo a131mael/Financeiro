@@ -38,5 +38,9 @@ public class CNB240_SICOOB_CONSTANTS_ADONAI {
 	public static final String CIDADE = "PALHOCA"; //CNPJ da Tefamel
 	public static final String CEP = "88132-700"; //CNPJ da Tefamel
 	public static final String UF = "SC"; //CNPJ da Tefamel
+
 	
+	public static final String VALORJUROSAODIA = "050";//50 centavos
+	public static final String VALORDESCONTO = "3000";//30 reais
+	public static final String VALORMULTA = "200";//2 % de multa
 }

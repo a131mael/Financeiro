@@ -7,6 +7,7 @@ public class ConstanteRemessa {
 		COD_CONTA_CORRENTE = remessa.COD_CONTA_CORRENTE;
 		VER_CONTA_CORRENTE = remessa.VER_CONTA_CORRENTE;
 		NOME_EMPRESA = remessa.NOME_EMPRESA;
+		VALORDESCONTO = remessa.VALORDESCONTO;
 	}
 
 	public ConstanteRemessa(CNAB240_SICOOB_REMESSA_CONSTANTS_TEFAMEL remessa) {
@@ -14,6 +15,7 @@ public class ConstanteRemessa {
 		COD_CONTA_CORRENTE = remessa.COD_CONTA_CORRENTE;
 		VER_CONTA_CORRENTE = remessa.VER_CONTA_CORRENTE;
 		NOME_EMPRESA = remessa.NOME_EMPRESA;
+		VALORDESCONTO = remessa.VALORDESCONTO;
 	}
 
 	//TODO HEADER
@@ -47,7 +49,7 @@ public class ConstanteRemessa {
 		public static  String DIAS_P_PROTESTO = "00";
 		public static  String DIAS_P_BAIXA = "180";
 		public static  String VALORJUROSAODIA = "050";//50 centavos
-		public static  String VALORDESCONTO = "2000";//20 reais
+		public static  String VALORDESCONTO = "3000";//20 reais
 		
 		//TODO SEGUIMENTO Q
 		public static  String TP_REGISTRO_SEGUIMENTO_Q = "3";

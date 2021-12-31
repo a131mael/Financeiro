@@ -32,7 +32,7 @@ public class CNAB240_SICOOB_REMESSA_CONSTANTS_ADONAI {
 	public static final String DIAS_P_PROTESTO = "00";
 	public static final String DIAS_P_BAIXA = "180";
 	public static final String VALORJUROSAODIA = "025";//25 centavos
-	public static final String VALORDESCONTO = "2000";//20 reais
+	public static final String VALORDESCONTO = "3000";//30 reais
 	
 	//TODO SEGUIMENTO Q
 	public static final String TP_REGISTRO_SEGUIMENTO_Q = "3";
