@@ -149,7 +149,7 @@ public class CNAB240_REMESSA_SICOOB {
 		cnab.append(OfficeUtil.quebraLinhaTXT);
 		cnab.append(traillerArquivo(1, sequencialSeguimento/4));
 		
-		caminhoArquivo = caminhoArquivo +  File.separator +dataGeracaoRemessa.getTime()+ ".txt";
+		caminhoArquivo = caminhoArquivo + dataGeracaoRemessa.getTime()+ ".txt";
 		//String caminho2 =  "C:\\Users\\Abimael Fidencio\\Desktop\\cnb240.txt";
 		OfficeUtil.criarTXT(caminhoArquivo, cnab.toString());
 		
