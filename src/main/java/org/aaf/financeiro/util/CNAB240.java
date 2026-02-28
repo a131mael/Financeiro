@@ -294,8 +294,15 @@ public class CNAB240 {
 		Calendar dte = Calendar.getInstance();
 		dte.set(2000, 06, 03); // TODO DATA FIXA DO BOLETO SERA MUDADO EM 2025
 		DateTime dt1 = new DateTime(dte.getTime());
+		long diferenca = (diferencaEntreDatas(data2, dt1.toDate()) + 1001);
+		
+		if(diferenca > 9999) {
+			dte.set(2025, 01, 21); // TODO DATA FIXA DO BOLETO SERA MUDADO EM 2025
+			dt1 = new DateTime(dte.getTime());
+			diferenca = (diferencaEntreDatas(data2, dt1.toDate()) + 1000);
+		}
 
-		return String.valueOf((diferencaEntreDatas(data2, dt1.toDate()) + 1001));
+		return String.valueOf(diferenca);
 	}
 
 	public static String verificadorNossoNumero(String numeroBoleto) {

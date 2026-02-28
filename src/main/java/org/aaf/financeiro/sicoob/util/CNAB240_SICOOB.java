@@ -1,5 +1,6 @@
 package org.aaf.financeiro.sicoob.util;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -198,10 +199,11 @@ public class CNAB240_SICOOB {
 	}
 
 	public Boleto getBoletoStella(Banco banco, Datas datas, Beneficiario beneficiario, Pagador pagador, String valor, String numeroBoleto) {
+		BigDecimal desconto = new BigDecimal(Integer.valueOf(constant.VALORDESCONTO)/100);
 
 		Boleto boleto = Boleto.novoBoleto().comBanco(banco).comDatas(datas).comBeneficiario(beneficiario)
 				.comPagador(pagador).comValorBoleto(valor).comNumeroDoDocumento(numeroBoleto).comEspecieDocumento("ME")
-				.comLocaisDePagamento("PAGAVEL EM QUALQUER BANCO ATE VENCIMENTO", "local 2");
+				.comLocaisDePagamento("PAGAVEL EM QUALQUER BANCO ATE VENCIMENTO", "local 2").comValorDescontos(desconto);
 
 		return boleto;
 	}
@@ -234,7 +236,7 @@ public class CNAB240_SICOOB {
 		String instrucao3 = "Juros de R$"
 				+ OfficeUtil.retornarComVirgula(constant.VALORJUROSAODIA)
 				+ "  ao dia, apos o vencimento.";
-		 String instrucao4 = "ATEN«√O - ESSE BOLETO PODE SER PAGO EM QUALQUER AGENCIA BANC¡RIA, MESMO AP”S O VENCIMENTO **.  "; 
+		 String instrucao4 = "ATEN√á√ÉO - ESSE BOLETO PODE SER PAGO EM QUALQUER AGENCIA BANC√ÅRIA, MESMO AP√≥S O VENCIMENTO **.  "; 
 
 		for (org.aaf.financeiro.model.Boleto boletoModel : pagador.getBoletos()) {
 			Datas datas = getDatasStella(boletoModel.getVencimento());
